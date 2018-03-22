@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="search">
     <input type="text" placeholder="Search..." list="test" v-on:keyup.13="submit" v-on:keyup="search" v-model="searchString">
     <datalist id="test">
         <option v-for="item in resultList" :key="item.name" :value="item.name"></option>
@@ -9,7 +9,9 @@
 </template>
 
 <style scoped>
-
+.search{
+    display: inline-block;
+}
 </style>
 
 <script>
@@ -28,10 +30,7 @@
                 });
             },
             submit(){
-               this.$http.post('http://13.59.89.132/stock-exchange-service/market/search', {searchString: this.searchString}).then(response => {
-                    console.log(response.data);
-                    this.$parent.search(response.data.stocks);
-                });
+                this.$parent.searchString = this.searchString;
             }
         }
     }

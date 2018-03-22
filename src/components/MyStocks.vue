@@ -36,6 +36,8 @@ table{
 </style>
 
 <script>
+    import bus from '../bus';
+
     export default {
         data() {
             return {
@@ -55,13 +57,11 @@ table{
 
                     let myStocksSymbols = myStocks.map(x => x.symbol);
 
-                    console.log(myStocksSymbols);
-
                     this.$http.get('http://13.59.89.132/stock-exchange-service/market', {params: {symbol: myStocksSymbols.toString()}}).then(response => {
 
                         var stocks = response.data.stocks;
                         this.list = [];
-                        this.$parent.profitable = [];
+                        var profitable = [];
 
                         for(var item of myStocks){
                             
@@ -71,10 +71,10 @@ table{
                                 var myStock = {};
                                 myStock.name = currentStock[0].name;
                                 myStock.symbol = currentStock[0].symbol;
-                                myStock.profitability = countProfitability(item.purchasePrice, currentStock[0].currentPrice, item.quantity);
+                                myStock.profitability = this.countProfitability(item.purchasePrice, currentStock[0].currentPrice, item.quantity);
 
                                 if(myStock.profitability > 0){
-                                    this.$parent.profitable.push(currentStock[0].symbol);
+                                    profitable.push(currentStock[0].symbol);
                                 }
 
                                 this.list.push(myStock);
@@ -82,8 +82,12 @@ table{
                             
                         }
 
+                        this.$parent.bought = this.list.map(x => x.symbol);
+
+                        this.$parent.refreshProfitable(profitable);
                     });
 
+                    this.$parent.searchAndFilter();
                 });
            },
 
@@ -97,6 +101,11 @@ table{
                var profitability = ((purchasePrice * quantity) - (currentPrice * quantity));
                return profitability.toFixed(2);
            }
+        },
+        mounted(){
+            bus.$on('refreshMyStock', () => {
+                this.getMyStocks();
+            });
         }
     }
 </script>
