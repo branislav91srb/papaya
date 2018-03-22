@@ -19,7 +19,7 @@
             <td>{{item.currentPrice}}</td>
             <td><input type="checkbox" :checked="item.following" disabled/></td>
             <td>
-                <button class="btn btn-primary" @click="buy(item.symbol)" :disabled="$parent.bought.includes(item.symbol) || $parent.funds < item.currentPrice">Buy</button>W
+                <button class="btn btn-primary" @click="buy(item.symbol)" :disabled="$parent.bought.includes(item.symbol) || $parent.funds < item.currentPrice">Buy</button>
                 <button class="btn btn-danger" @click="sell(item.symbol)" :disabled="!$parent.bought.includes(item.symbol)">Sell</button>
             </td>
             </tr>
