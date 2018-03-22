@@ -45,7 +45,7 @@ export default {
       profitable: [],
       bought: [],
 
-      search: "",
+      search: '',
       canBuy: false,
       following: false
     }

@@ -19,7 +19,7 @@
             <td>{{item.currentPrice}}</td>
             <td><input type="checkbox" :checked="item.following" disabled/></td>
             <td>
-                <button class="btn btn-primary" @click="buy(item.symbol)" :disabled="$parent.bought.includes(item.symbol) || $parent.funds < item.currentPrice">Buy</button>
+                <button class="btn btn-primary" @click="buy(item.symbol)" :disabled="$parent.bought.includes(item.symbol) || $parent.funds < item.currentPrice">Buy</button>W
                 <button class="btn btn-danger" @click="sell(item.symbol)" :disabled="!$parent.bought.includes(item.symbol)">Sell</button>
             </td>
             </tr>
@@ -32,13 +32,16 @@
 table {
   width: 100%;
 }
+.btn-primary{
+  margin-right: 20px;
+}
 </style>
 
 <script>
 import bus from '../bus';
 
 export default {
-  props: ["list", "canBuy"],
+  props: ['list', 'canBuy'],
   data() {
     return {
       following: []
@@ -54,7 +57,7 @@ export default {
     },
     buy(symbol) {
       this.$http
-        .post("http://13.59.89.132/stock-exchange-service/market/buy", {
+        .post('http://13.59.89.132/stock-exchange-service/market/buy', {
           stockSymbol: symbol, 
           stockQuantity: 1
         })
@@ -66,7 +69,7 @@ export default {
     },
     sell(symbol) {
       this.$http
-        .post("http://13.59.89.132/stock-exchange-service/market/sell", {
+        .post('http://13.59.89.132/stock-exchange-service/market/sell', {
           stockSymbol: symbol
         })
         .then(response => {
