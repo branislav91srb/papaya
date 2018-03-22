@@ -35,6 +35,7 @@ import Results from './components/Results.vue';
 import MyStocks from './components/MyStocks.vue';
 
 import bus from './bus';
+import { setInterval } from 'timers';
 
 export default {
   data() {
@@ -54,6 +55,12 @@ export default {
       Results,
       MyStocks,
       StockFilter
+  },
+  created(){
+    var self = this;
+    setInterval(function(){
+      self.searchAndFilter();
+    }, 5000);
   },
   methods: {
     searchAndFilter(){

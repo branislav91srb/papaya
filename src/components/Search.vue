@@ -30,7 +30,8 @@
                 });
             },
             submit(){
-                this.$parent.searchString = this.searchString;
+                this.$parent.search = this.searchString;
+                this.$parent.searchAndFilter();
             }
         }
     }

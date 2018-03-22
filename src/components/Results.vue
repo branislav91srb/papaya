@@ -50,7 +50,6 @@ export default {
       var showFollowing = !this.$parent.following || (this.$parent.following && item.following);
 
       var show = showCanbuy && showFollowing;
-      console.log("show", show);
       return show;
     },
     buy(symbol) {
