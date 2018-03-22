@@ -1,31 +1,65 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <h3>Current funds: {{funds}}</h3>
+    <search></search>
+    <results :list="results"></results>
+
+    <h3>My Stocks</h3>
+    <my-stocks></my-stocks>
+
   </div>
 </template>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+<style scoped>
+#app{
+  width:50%;
+  margin: 0 auto;
 }
 </style>
+
+<script>
+
+import Vue from 'vue';
+import Search from './components/Search.vue';
+import Results from './components/Results.vue';
+import MyStocks from './components/MyStocks.vue';
+
+export default {
+  data() {
+    return {
+      results: [],
+      funds: 0,
+      profitable: []
+    }
+  },
+  components: {
+      Search,
+      Results,
+      MyStocks
+  },
+  methods: {
+    search(res){
+      console.log("profitable", this.profitable);
+      console.log("res", res);
+
+      this.results = [];
+      
+      for(var item of res){
+          var result = {};
+
+          result.name = item.name;
+          result.symbol = item.symbol;
+          result.startOfCommerce = item.startOfCommerce;
+          result.currentPrice = item.currentPrice;
+          result.following = this.profitable.includes(item.symbol);
+
+          this.results.push(result);
+      }
+
+      console.log("results", this.results);
+    }
+    
+  }
+}
+</script>
+
